@@ -1,6 +1,8 @@
 package com.commerce.service;
 
+import com.commerce.entity.Plant;
+
 public interface PlantStoreService { //for ordering and adding to cart
-    void buyPlant(Long consumerId, Long plantId, int quantity);
-    void addToCart(Long userId, Long plantId, int quantity);
+    Plant buyPlant(Long userId, Long plantId, int quantity);
+    Plant addToCart(Long userId, Long plantId, int quantity);
 }

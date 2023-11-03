@@ -2,12 +2,12 @@ package com.commerce.service;
 
 import com.commerce.DAO.*;
 import com.commerce.entity.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class PlantServiceIMPL implements PlantService{
 
@@ -53,6 +53,11 @@ public class PlantServiceIMPL implements PlantService{
         return plantRepository.findAll();
     }
 
-
+    @Override
+    public Optional<Plant> getPlantsById(Long id) {
+        return plantRepository.findById(id);
     }
+
+
+}
 

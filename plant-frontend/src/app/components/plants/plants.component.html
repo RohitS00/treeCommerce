@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+      <div *ngFor="let plant of plants" class="col-md-4 mb-4">
+        <div class="card">
+          <img [src]="getPlantImageUrl(plant.pictureData)" class="card-img-top" alt="Plant Image">
+          <div class="card-body">
+            <h5 class="card-title">{{ plant.name }}</h5>
+            <p class="card-text">{{ plant.description }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ plant.price }}</p>
+            <button class="btn btn-primary" (click)="viewPlantDetails(plant.id)">View Plant</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

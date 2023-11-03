@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PlantStoreServiceIMPL implements PlantStoreService{
     @Autowired
@@ -35,11 +38,17 @@ public class PlantStoreServiceIMPL implements PlantStoreService{
     private CartItemRepository cartItemRepository;
     @Override
     @Transactional
-    public void buyPlant(Long consumerId, Long plantId, int quantity) {
-//        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Consumer not found")); //if wannt use userId do this
-//        Consumer consumer = user.getConsumer();
+    public Plant buyPlant(Long userId, Long plantId, int quantity) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Consumer not found")); //if wannt use userId do this
+        Consumer consumer = user.getConsumer();
+        if (consumer == null){
+            System.out.println("consumer nhi hai");
+        }
+        if (consumer.getPurchaseOrder() == null) {
+            consumer.setPurchaseOrder(new ArrayList<>());
+        }
         Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new EntityNotFoundException("Plant not found"));
-        Consumer consumer = consumerRepository.findById(consumerId).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
+//        Consumer consumer = consumerRepository.findById(consumerId).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
 
         Stock stock = plant.getStock();
 
@@ -60,22 +69,26 @@ public class PlantStoreServiceIMPL implements PlantStoreService{
         stock.setOnHand(stock.getOnHand() - quantity);
         stock.setSold(stock.getSold() + quantity);
 
-        consumer.setPurchaseOrder(purchaseOrder);
+        consumer.getPurchaseOrder().add(purchaseOrder);
 
         consumerRepository.save(consumer);
         plantRepository.save(plant);
         purchaseOrderRepository.save(purchaseOrder);
         orderitemRepository.save(orderitem);
         stockRepository.save(stock);
+        return plant;
     }
 
     @Override
-    public void addToCart(Long consumerId, Long plantId, int quantity) {
-
+    public Plant addToCart(Long userId, Long plantId, int quantity) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
+        Consumer consumer = user.getConsumer();
         Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new EntityNotFoundException("Plant not found"));
-        Consumer consumer = consumerRepository.findById(consumerId).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
+//        Consumer consumer = consumerRepository.findById(consumerId).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
         Stock stock = plant.getStock();
-
+        if (consumer == null){
+            System.out.println("consumer nhi hai");
+        }
         if (stock.getOnHand() < quantity) {
             throw new IllegalArgumentException("Not enough plants in stock.");
         }
@@ -92,6 +105,7 @@ public class PlantStoreServiceIMPL implements PlantStoreService{
         cartItem.setCart(cart);
 
         cartItemRepository.save(cartItem); // Save the new cart item to the database
+        return plant;
     }
 
 }

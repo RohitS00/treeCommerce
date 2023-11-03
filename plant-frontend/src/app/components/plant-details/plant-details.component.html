@@ -1,0 +1,9 @@
+<div *ngIf="plant">
+    <h2>{{ plant.name }}</h2>
+    <p><strong>Description:</strong> {{ plant.description }}</p>
+    <p><strong>Price:</strong> ${{ plant.price }}</p>
+    <!-- <img [src]="getPlantImageUrl(plant.pictureData)" alt="Plant Image"> -->
+    <button (click)="buyPlant(plant.id, 1)">Buy</button>
+  <button (click)="addToCart(plant.id, 1)">Add to Cart</button>
+  </div>
+  

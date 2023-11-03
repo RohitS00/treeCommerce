@@ -1,5 +1,6 @@
 package com.commerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,11 +28,12 @@ public class PurchaseOrder {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    @OneToOne(cascade = CascadeType.ALL) //with consumer
+    @ManyToOne(cascade = CascadeType.ALL) //with consumer //change this
     @JoinColumn(name = "consumer_id", referencedColumnName = "id")
     private Consumer consumer;
 
     @OneToMany(mappedBy = "purchaseOrder")
+    @JsonIgnore
     private List<Orderitem> orderitemList;
 
     @OneToOne(mappedBy = "purchaseOrder")

@@ -1,0 +1,12 @@
+.success-toast {
+    background-color: #4caf50; /* Green color for success */
+    color: #ffffff; /* White text */
+  }
+  
+  .error-toast {
+    background-color: #f44336; /* Red color for error */
+    color: #ffffff; /* White text */
+  }
+  
+  /* This CSS code defines styles for the success and error toasts. You can adjust the colors and other styles to match your application's design preferences. Make sure to apply these CSS classes when opening the snack bar in your component. */
+  

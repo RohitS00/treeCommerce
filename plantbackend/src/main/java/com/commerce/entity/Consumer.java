@@ -1,9 +1,11 @@
 package com.commerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,8 +29,9 @@ public class Consumer {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToOne(mappedBy = "consumer") //non owning side with Order
-    private PurchaseOrder purchaseOrder;
+    @OneToMany(mappedBy = "consumer") //non owning side with Order
+    @JsonIgnore
+    private List<PurchaseOrder> purchaseOrder;
 
     @OneToOne(mappedBy = "consumer")
     private Cart cart;

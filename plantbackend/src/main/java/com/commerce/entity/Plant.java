@@ -22,7 +22,9 @@ public class Plant {
     private String temperature;
     private String createdBy;
     private String updatedBy;
-    private String picture;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] pictureData;
     private int onHandValue; //for setting up inital stock value
     @Transient
     private MultipartFile plantImage;
