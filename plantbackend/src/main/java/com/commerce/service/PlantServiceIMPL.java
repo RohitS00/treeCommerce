@@ -2,6 +2,7 @@ package com.commerce.service;
 
 import com.commerce.DAO.*;
 import com.commerce.entity.*;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +23,14 @@ public class PlantServiceIMPL implements PlantService{
     StockRepository stockRepository;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     private ConsumerRepository consumerRepository;
     @Override
     public Plant savePlant(int id, Plant plant) {
-        Provider provider = providerService.findProvider(id);
+        User user = userRepository.findById((long) id).orElseThrow(() -> new EntityNotFoundException("Consumer not found"));
+        Provider provider = user.getProvider();
 
         if (provider != null) {
             plant.setProvider(provider);

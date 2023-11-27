@@ -26,8 +26,8 @@ public class Plant {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] pictureData;
     private int onHandValue; //for setting up inital stock value
-    @Transient
-    private MultipartFile plantImage;
+//    @Transient
+//    private MultipartFile plantImage;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
@@ -53,8 +53,8 @@ public class Plant {
     @JoinColumn(name="stock_id")
     private Stock stock;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+//    @Enumerated(EnumType.STRING)
+//    private Category category;
 
     @PrePersist //for audit fields
     protected void onCreate() {

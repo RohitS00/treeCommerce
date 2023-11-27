@@ -1,22 +1,33 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card mt-5">
-        <div class="card-body">
-          <h2 class="text-center">Login</h2>
-          <form (ngSubmit)="login()">
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" [(ngModel)]="loginUser.email" name="email" class="form-control" required>
+<div class="container1">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="mycard custom-width">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form (ngSubmit)="login()">
+          <mat-form-field class="form-group">
+            <input matInput type="email" [(ngModel)]="loginUser.email" name="email" placeholder="Email" required>
+          </mat-form-field>
+          <mat-form-field class="form-group">
+            <input matInput type="password" [(ngModel)]="loginUser.password" name="password" placeholder="Password" required>
+          </mat-form-field>
+          <!-- <div fxLayout="column" fxLayoutGap="10px">
+            <button mat-raised-button type="submit" class="btn-secondary login-button">Login</button>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="text-end">
+              <p class="new-user-text">New User?</p>
+              <a mat-raised-button routerLink="/register" class="btn-secondary register-button">Register</a>
             </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" [(ngModel)]="loginUser.password" name="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-          </form>
-        </div>
-      </div>
-    </div>
+          </div> -->
+          <div fxLayout="column" fxLayoutGap="10px" class="d-flex flex-row justify-content-between">
+            <button mat-raised-button type="submit" class="btn-secondary login-button">Login</button>
+            <!-- <div fxLayout="row" fxLayoutAlign="space-between center" class="text-end"> -->
+              <!-- <p class="new-user-text">New User?</p> -->
+              <a mat-raised-button routerLink="/register" class="btn-secondary register-button">Register</a>
+            <!-- </div> -->
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

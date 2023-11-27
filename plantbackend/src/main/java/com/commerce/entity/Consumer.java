@@ -30,7 +30,7 @@ public class Consumer {
     private Address address;
 
     @OneToMany(mappedBy = "consumer") //non owning side with Order
-    @JsonIgnore
+//    @JsonIgnore
     private List<PurchaseOrder> purchaseOrder;
 
     @OneToOne(mappedBy = "consumer")

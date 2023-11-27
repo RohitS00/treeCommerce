@@ -1,41 +1,42 @@
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card mt-5">
-        <div class="card-body">
-          <h2 class="text-center">Register</h2>
-          <form (submit)="register()">
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input type="text" id="username" [(ngModel)]="registerUser.username" name="username" class="form-control" required>
+<div class="container1">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="mycard custom-width">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form (submit)="register()">
+          <mat-form-field class="form-group">
+            <input matInput type="text" [(ngModel)]="registerUser.username" name="username" placeholder="Username" required>
+          </mat-form-field>
+          <mat-form-field class="form-group">
+            <input matInput type="email" [(ngModel)]="registerUser.email" name="email" placeholder="Email" required>
+          </mat-form-field>
+          <mat-form-field class="form-group">
+            <input matInput type="password" [(ngModel)]="registerUser.password" name="password" placeholder="Password" required>
+          </mat-form-field>
+          <mat-form-field class="form-group">
+            <input matInput type="text" [(ngModel)]="registerUser.phoneNumber" name="phoneNumber" placeholder="Phone Number" required>
+          </mat-form-field>
+          <div class="form-group">
+            <label for="role">Role:</label>
+            <div class="form-check">
+              <input type="radio" id="consumer" [(ngModel)]="registerUser.role" name="role" value="CONSUMER" class="form-check-input" required>
+              <label class="form-check-label" for="CONSUMER">Consumer</label>
             </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" [(ngModel)]="registerUser.email" name="email" class="form-control" required>
+            <div class="form-check">
+              <input type="radio" id="provider" [(ngModel)]="registerUser.role" name="role" value="PROVIDER" class="form-check-input" required>
+              <label class="form-check-label" for="PROVIDER">Provider</label>
             </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" [(ngModel)]="registerUser.password" name="password" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="phoneNumber">Phone Number:</label>
-              <input type="text" id="phoneNumber" [(ngModel)]="registerUser.phoneNumber" name="phoneNumber" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="role">Role:</label>
-              <div class="form-check">
-                <input type="radio" id="consumer" [(ngModel)]="registerUser.role" name="role" value="consumer" class="form-check-input" required>
-                <label class="form-check-label" for="consumer">Consumer</label>
-              </div>
-              <div class="form-check">
-                <input type="radio" id="provider" [(ngModel)]="registerUser.role" name="role" value="provider" class="form-check-input" required>
-                <label class="form-check-label" for="provider">Provider</label>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
-          </form>
-        </div>
-      </div>
-    </div>
+          </div>
+          <div fxLayout="column" fxLayoutGap="10px" class="d-flex flex-row justify-content-between">
+          <button mat-raised-button type="submit" class="btn-secondary login-button">Register</button>
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="text-end">
+            <!-- <p class="new-user-text">New User?</p> -->
+            <a mat-raised-button routerLink="/login" class="btn-secondary register-button">Login</a>
+          </div></div>
+        </form>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

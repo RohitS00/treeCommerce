@@ -30,6 +30,7 @@ public class PurchaseOrder {
 
     @ManyToOne(cascade = CascadeType.ALL) //with consumer //change this
     @JoinColumn(name = "consumer_id", referencedColumnName = "id")
+    @JsonIgnore
     private Consumer consumer;
 
     @OneToMany(mappedBy = "purchaseOrder")

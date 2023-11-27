@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/utils/modals/User';
+import { AuthService } from 'src/app/utils/services/auth.service';
 import { UserService } from 'src/app/utils/services/user.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/utils/services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private authService: AuthService) { }
 
   // Properties for the registration form
   registerUser: User = {
@@ -17,13 +18,13 @@ export class RegisterComponent {
     email: '',
     password: '',
     phoneNumber: '',
-    role: 'consumer' // Assuming 'consumer' is the default role for registration
+    role: 'CONSUMER' // Assuming 'consumer' is the default role for registration
   };
 
   // Function to handle form submission
   register() {
     if (this.registerUser.username && this.registerUser.email && this.registerUser.password && this.registerUser.phoneNumber) {
-      this.userService.register(this.registerUser)
+      this.authService.register(this.registerUser)
         .subscribe(
           user => {
             console.log('registered!!!!')

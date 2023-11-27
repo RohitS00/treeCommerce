@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Plant } from '../modals/Plant';
 import { AuthenticationService } from './authentication-service.service';
+import { UploadPlant } from '../modals/UploadPlant';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class PlantService {
   }
   isUserAuthenticated(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  addPlant(userId: number | undefined,newPlant: UploadPlant): Observable<Plant> {
+    return this.http.post<Plant>(`${this.apiUrl}addPlant/${userId}`, newPlant);
   }
 }

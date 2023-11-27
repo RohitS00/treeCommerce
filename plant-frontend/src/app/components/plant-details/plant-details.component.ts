@@ -4,6 +4,7 @@ import { Plant } from 'src/app/utils/modals/Plant';
 import { AuthenticationService } from 'src/app/utils/services/authentication-service.service';
 import { PlantService } from 'src/app/utils/services/plant.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/utils/services/auth.service';
 
 @Component({
   selector: 'app-plant-details',
@@ -16,9 +17,10 @@ export class PlantDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private plantService: PlantService,
-    private authService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -32,16 +34,18 @@ export class PlantDetailsComponent implements OnInit {
   }
 
   buyPlant(plantId: number, quantity: number) {
-    const userId = this.authService.getUserId();
-    if (this.plantService.isUserAuthenticated()){
+    const userId = this.authenticationService.getUserId();
+    if (this.authService.isLoggedIn()){
     // Make API request with the userId and plantId
     this.plantService.buyPlant(userId, plantId, quantity)
       .subscribe(response => {
+        alert("purchase successful");
         console.log('Purchase successful:', response);
         // this.showSuccessMessage(response);
       });}
       else{
         this.router.navigate(['/login']);
+        
       }
   }
   // showSuccessMessage(message: string) {
@@ -58,6 +62,7 @@ export class PlantDetailsComponent implements OnInit {
     if (this.plantService.isUserAuthenticated()){
     this.plantService.addToCart(userId, plantId, quantity)
       .subscribe(response => {
+        alert("added to cart");
         console.log('added to cart:', response);
       });}
       else{

@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Add a New Plant</h2>
+    <form (submit)="addPlant()">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="newPlant.name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" id="description" [(ngModel)]="newPlant.description" name="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" class="form-control" id="price" [(ngModel)]="newPlant.price" name="price" required>
+      </div>
+      <div class="form-group">
+        <label for="water">Water:</label>
+        <input type="text" class="form-control" id="water" [(ngModel)]="newPlant.water" name="water" required>
+      </div>
+      <div class="form-group">
+        <label for="temperature">Temperature:</label>
+        <input type="text" class="form-control" id="temperature" [(ngModel)]="newPlant.temperature" name="temperature" required>
+      </div>
+      <div class="form-group">
+        <label for="pictureData">Picture Data:</label>
+        <input type="text" class="form-control" id="pictureData" [(ngModel)]="newPlant.pictureData" name="pictureData" required>
+      </div>
+      <div class="form-group">
+        <label for="onHandValue">On Hand Value:</label>
+        <input type="number" class="form-control" id="onHandValue" [(ngModel)]="newPlant.onHandValue" name="onHandValue" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { User } from '../modals/User';
 import { LoginUser }from '../modals/LoginUser'
+import { Plant } from '../modals/Plant';
+import { PurchaseOrder } from '../modals/PurchaseOrder';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +37,12 @@ export class UserService {
     // Clear the user subject
     this.userSubject.next(null);
   }
+  providerPlants(userId: number | undefined): Observable<Plant[]> {
+    return this.http.get<Plant[]>(`${this.apiUrl}/provider/plants/${userId}`);
+  }
+  getOrdersById(userId: number| undefined): Observable<PurchaseOrder[]> {
+    console.log(userId);
+    return this.http.get<PurchaseOrder[]>(`${this.apiUrl}/consumer/plants/${userId}`);
+  }
+  
 }

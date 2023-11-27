@@ -1,15 +1,16 @@
 package com.commerce.controller;
 
 import com.commerce.DAO.PlantRepository;
+import com.commerce.entity.Orderitem;
 import com.commerce.entity.Plant;
-import com.commerce.entity.User;
+import com.commerce.entity.Provider;
+import com.commerce.entity.PurchaseOrder;
 import com.commerce.service.PlantService;
 import com.commerce.service.PlantStoreService;
 import com.commerce.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +36,18 @@ public class MyController {
     @Value("${plant.picture.upload.directory}")
     private String localStoragePath;
 
-    @PostMapping("/registerUser") //signup
-    public User registerUser(@RequestBody User user) throws Exception {
-        return userService.register(user);
-    }
+//    @PostMapping("/registerUser") //signup
+//    public User registerUser(@RequestBody User user) throws Exception {
+//        return userService.register(user);
+//    }
 
-    @PostMapping("/loginUser") //login
-    public User loginUser(@RequestBody User user) throws Exception {
-        return userService.login(user);
-    }
-
-    @PostMapping("/addPlant/{Pid}") //uploading plant by provider
-    public Plant addPlant(@PathVariable("Pid") int id, @RequestBody Plant plant) {
+//    @PostMapping("/loginUser") //login
+//    public Optional<User> loginUser(@RequestBody User user) throws Exception {
+//        return userService.login(user);
+//    }
+//
+    @PostMapping("/addPlant/{Uid}") //uploading plant by provider
+    public Plant addPlant(@PathVariable("Uid") int id, @RequestBody Plant plant) {
 
         return plantService.savePlant(id, plant);
     }
@@ -55,6 +56,7 @@ public class MyController {
     public List<Plant> getAllPlants() {
         return plantService.getPlants();
     }
+
 
     @GetMapping("/plants/{Pid}") //finding plant by id
     public Optional<Plant> getPlant(@PathVariable("Pid") Long id){
@@ -86,7 +88,7 @@ public class MyController {
         }
     }
 
-    @PostMapping("/uploadPlantPicture/{Pid}/{plantId}")
+    @PostMapping("/uploadPlantPicture/{Uid}/{plantId}")
     public void uploadPicture(@RequestParam("file") MultipartFile file, @PathVariable Long plantId) {
         Plant plant = plantRepository.findById(plantId).orElseThrow(() -> new EntityNotFoundException("Plant not found"));
         try {
@@ -123,6 +125,15 @@ public class MyController {
             e.printStackTrace(); // You might want to log the error or return an appropriate response
 
         }
+    }
+
+    @GetMapping("/provider/plants/{Uid}") //finding plant by id
+    public List<Plant> getPlantByProvider(@PathVariable("Uid") Long id){
+        return userService.getProviderPlantsById(id);
+    }
+    @GetMapping("/consumer/plants/{Uid}") //finding plant by id
+    public List<PurchaseOrder> getOrders(@PathVariable("Uid") Long id){
+        return userService.getOrderById(id);
     }
 
 }

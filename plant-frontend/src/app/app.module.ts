@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +15,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { PlantDetailsComponent } from './components/plant-details/plant-details.component';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UploadPlantComponent } from './components/upload-plant/upload-plant.component';
 
+import { AuthInterceptorService } from './utils/services/auth-interceptor.service';
+
+import { ConsumerViewComponent } from './components/consumer-view/consumer-view.component';
+import { ProviderViewComponent } from './components/provider-view/provider-view.component';
+import { ProviderPlantsComponent } from './components/provider-plants/provider-plants.component';
+import { ConsumerOrderComponent } from './components/consumer-order/consumer-order.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +36,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HomeComponent,
     PlantsComponent,
     NavbarComponent,
-    PlantDetailsComponent
+    PlantDetailsComponent,
+    UploadPlantComponent,
+    ProviderViewComponent,
+    ProviderPlantsComponent,
+    ConsumerViewComponent,
+    ConsumerOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +50,20 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
