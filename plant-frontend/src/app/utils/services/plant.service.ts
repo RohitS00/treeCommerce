@@ -36,4 +36,12 @@ export class PlantService {
   addPlant(userId: number | undefined,newPlant: UploadPlant): Observable<Plant> {
     return this.http.post<Plant>(`${this.apiUrl}addPlant/${userId}`, newPlant);
   }
+  // savePlant(userId: number, formData: FormData): Observable<any> {
+  //   const url = `${this.apiUrl}savePlant/${userId}`;
+  //   return this.http.post(url, formData);
+  // }
+  savePlant(userId: number, formData: FormData): Observable<any> {
+    const url = `${this.apiUrl}savePlant?Uid=${userId}`;
+    return this.http.post(url, formData);
+  }
 }

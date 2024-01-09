@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/addPlant/**").hasAuthority("PROVIDER")
+                        .requestMatchers("/savePlant/**").hasAuthority("PROVIDER")
                         .requestMatchers("/uploadPlantPicture/**").hasAuthority("PROVIDER")
                         .requestMatchers("/add-to-cart/**").hasAuthority("CONSUMER")
                         .requestMatchers("/buy-plant/**").hasAuthority("CONSUMER")

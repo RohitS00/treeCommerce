@@ -1,48 +1,100 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Plant } from 'src/app/utils/modals/Plant';
-import { UploadPlant } from 'src/app/utils/modals/UploadPlant';
+// plant.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+// import { PlantService } from '../services/plant.service';
+// import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PlantService } from 'src/app/utils/services/plant.service';
 import { AuthService } from 'src/app/utils/services/auth.service';
 import { AuthenticationService } from 'src/app/utils/services/authentication-service.service';
-import { PlantService } from 'src/app/utils/services/plant.service';
 
 @Component({
   selector: 'app-upload-plant',
   templateUrl: './upload-plant.component.html',
   styleUrls: ['./upload-plant.component.css']
 })
-export class UploadPlantComponent {
-  newPlant: UploadPlant = {
-    name: '',
-    description: '',
-    price: 0,
-    water: '',
-    temperature: '',
-    pictureData: '',
-    onHandValue: 1,
-  
-  };
+export class UploadPlantComponent implements OnInit {
+  plantForm: FormGroup;
+  imageFile: File | null = null;
 
-  constructor(private plantService: PlantService,
-    private authenticationService: AuthenticationService,
+  constructor(
+    private plantService: PlantService,
     private authService: AuthService,
-    private router: Router) { }
+    private authenticationService: AuthenticationService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.plantForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      price: ['', Validators.required],
+      water: ['', Validators.required],
+      temperature: ['', Validators.required],
+      onHandValue: ['', Validators.required],
+      pictureData: [null, Validators.required]
+    });
+  }
 
-  addPlant() {
+  ngOnInit(): void {}
+
+  onImageChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.imageFile = event.target.files[0];
+    }
+  }
+
+  // savePlant() {
+  //   const userId = this.authenticationService.getUserId();
+  //   console.log("here it is",userId)
+  //   if (userId) {
+  //     const formData = new FormData();
+  //     formData.append('plant', JSON.stringify(this.plantForm.value));
+      
+  //     if (this.imageFile) {
+  //       formData.append('image', this.imageFile);
+  //     }
+  
+  //     this.plantService.savePlant(userId, formData).subscribe(
+  //       (response) => {
+  //         console.log('Plant saved successfully:', response);
+  //         // You can redirect to the plant details page or do any other necessary action
+  //       },
+  //       (error) => {
+  //         console.error('Error saving plant:', error);
+  //         // Handle the error as needed
+  //       }
+  //     );
+  //   } else {
+  //     console.error('User ID not available');
+  //     // Handle the situation when the user ID is not available
+  //   }
+  // }
+  savePlant() {
     const userId = this.authenticationService.getUserId();
-    if (this.authService.isLoggedIn()){
-    this.plantService.addPlant(userId, this.newPlant).subscribe(
-      plant => {
-        alert('Plant added successfully');
-        console.log('Plant added successfully', plant);
-        // Optionally, navigate to a different page after adding the plant
-      },
-      error => {
-        console.error('Error adding plant', error);
+    console.log("here it is", userId);
+    if (userId) {
+      const formData = new FormData();
+      formData.append('plant', JSON.stringify(this.plantForm.value));
+
+      if (this.imageFile) {
+        formData.append('image', this.imageFile);
       }
-    );}
-    else{
-      this.router.navigate(['/login']);
+
+      this.plantService.savePlant(userId, formData).subscribe(
+        (response) => {
+          console.log('Plant saved successfully:', response);
+          // You can redirect to the plant details page or do any other necessary action
+        },
+        (error) => {
+          console.error('Error saving plant:', error);
+          // Handle the error as needed
+        }
+      );
+    } else {
+      console.error('User ID not available');
+      // Handle the situation when the user ID is not available
     }
   }
 }

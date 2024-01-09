@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +52,15 @@ public class MyController {
 
         return plantService.savePlant(id, plant);
     }
+//    @PostMapping(path = "/savePlant/{Uid}", consumes = MediaType.ALL_VALUE) //uploading plant along with picture
+//    public ResponseEntity<Plant> savePlant(@PathVariable("Uid") int id, @RequestPart("plant") String plant, @RequestPart("image") MultipartFile image) {
+//        return this.plantService.addPlant(id,plant,image);
+//    }
+    @PostMapping(path = "/savePlant", consumes = MediaType.ALL_VALUE) //uploading plant along with picture
+    public ResponseEntity<Plant> savePlant(@RequestParam("Uid") int id, @RequestPart("plant") String plant, @RequestPart("image") MultipartFile image) {
+        return this.plantService.addPlant(id, plant, image);
+    }
+
 
     @GetMapping("/") //seeing all plants
     public List<Plant> getAllPlants() {

@@ -24,14 +24,16 @@ export class LoginComponent {
     if (this.loginUser.email && this.loginUser.password) {
       this.authService.login(this.loginUser).subscribe(
         user => {
-          console.log('Login successful');
+          console.log('Login successfulyy', this.authenticationService.getUserId());
+          console.log("this is id",this.authenticationService.getUserId);
           this.authenticationService.setUserId(user.id)
+          console.log("this is id",this.authenticationService.getUserId())
           // console.log(this.authenticationService.getUserId())
           console.log(user)
           localStorage.setItem('token',user.token);
         
           this.authService.setUserId(user.id);
-          console.log(user.role)
+          console.log("this is working",user.role)
           if(user.role == 'CONSUMER'){
           this.router.navigate(['consumer-view']);}
           else if(user.role == 'PROVIDER'){
